@@ -21,8 +21,19 @@ class NewsView(GenericAPIView):
 		return Response(news)
 
 	def post(self, request):
-
 		serializer = NewsSerializer(data=request.data)
 		if serializer.is_valid(raise_exception=True):
 			serializer.save()
 			return Response(serializer.data)
+
+class EditView(GenericAPIView):
+
+	serializer_class = NewsSerializer
+	queryset=""
+
+	def get(self, request):
+		id = request.query_params["id"]
+		news = News.objects.get(id=id)
+		serializer = NewsSerializer(news)
+
+		return Response(serializer.data)
