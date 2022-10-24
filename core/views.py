@@ -37,3 +37,6 @@ class EditView(GenericAPIView):
 		serializer = NewsSerializer(news)
 
 		return Response(serializer.data)
+
+	# def update(self, request):
+	# 	News.objects.filter(pk=self.id).update()
