@@ -4,6 +4,6 @@ from core.views import *
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
-	path('news/', NewsView.as_view(), name="TestTask"),
-	path('edit/', EditView.as_view(), name="EditNews")
+	path('news/', NewsView.get_all),
+	path('news/<int:news_id>/', NewsView.get_one)
 ]

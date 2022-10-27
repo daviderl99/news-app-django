@@ -1,42 +1,31 @@
 from rest_framework.generics import GenericAPIView
-from . models import *
 from rest_framework.response import Response
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from . models import *
 from . serializer import *
-
 class NewsView(GenericAPIView):
-	
 	serializer_class = NewsSerializer
 	queryset = ''
 
-	def get(self, request):
-		news = [
-			{
-				"title": news.title, 
-				"date": news.date, 
-				"lead": news.lead, 
-				"text": news.text
-			}
-			for news in News.objects.all()
-		]
-		return Response(news)
+	@api_view(('GET',))
+	def get_all(self):
+		news = News.objects.all()
+		serializer = NewsSerializer(news, many=True)
 
-	def post(self, request):
-		serializer = NewsSerializer(data=request.data)
-		if serializer.is_valid(raise_exception=True):
-			serializer.save()
-			return Response(serializer.data)
+		return Response(serializer.data)
 
-class EditView(GenericAPIView):
-
-	serializer_class = NewsSerializer
-	queryset=""
-
-	def get(self, request):
-		id = request.query_params["id"]
+	@api_view(('GET',))
+	def get_one(self):
+		id = 1
 		news = News.objects.get(id=id)
 		serializer = NewsSerializer(news)
 
 		return Response(serializer.data)
 
-	# def update(self, request):
-	# 	News.objects.filter(pk=self.id).update()
+	def post(self, request):
+		serializer = NewsSerializer(data=request.data)
+		if serializer.is_valid(raise_exception=True):
+			serializer.save()
+
+		return Response(serializer.data)
