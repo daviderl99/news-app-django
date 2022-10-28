@@ -1,7 +1,6 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, renderer_classes
-from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from rest_framework.decorators import api_view
 from . models import *
 from . serializer import *
 class NewsView(GenericAPIView):
