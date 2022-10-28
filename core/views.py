@@ -16,9 +16,8 @@ class NewsView(GenericAPIView):
 		return Response(serializer.data)
 
 	@api_view(('GET',))
-	def get_one(self):
-		id = 1
-		news = News.objects.get(id=id)
+	def get_one(self, news_id):
+		news = News.objects.get(id=news_id)
 		serializer = NewsSerializer(news)
 
 		return Response(serializer.data)
@@ -29,3 +28,6 @@ class NewsView(GenericAPIView):
 			serializer.save()
 
 		return Response(serializer.data)
+	
+	def update(self, request):
+		return None
