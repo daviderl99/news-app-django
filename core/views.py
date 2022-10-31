@@ -15,6 +15,7 @@ class NewsView(GenericAPIView):
 			serializer = NewsSerializer(news, many=True)
 
 			return Response(serializer.data)
+
 		elif request.method == 'POST':
 			serializer = NewsSerializer(data=request.data)
 			if serializer.is_valid(raise_exception=True):
